@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>抽選アプリ</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .group {
+        margin-bottom: 20px;
+      }
+
+      button {
+        margin-top: 10px;
+      }
+
+      .result {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>抽選アプリ</h1>
+
+    <div id="app">
+      <div
+        v-for="(group, groupIndex) in groups"
+        :key="groupIndex"
+        class="group"
+      >
+        <h2>グループ {{ groupIndex + 1 }}</h2>
+        <label for="title">タイトル：</label>
+        <input type="text" v-model="group.title" />
+
+        <div
+          v-for="(candidate, candidateIndex) in group.candidates"
+          :key="candidateIndex"
+        >
+          <label for="candidate">抽選候補：</label>
+          <input type="text" v-model="group.candidates[candidateIndex]" />
+          <button @click="removeCandidate(groupIndex, candidateIndex)">
+            削除
+          </button>
+        </div>
+
+        <button @click="addCandidate(groupIndex)">抽選候補を追加</button>
+        <button @click="removeGroup(groupIndex)">グループを削除</button>
+      </div>
+
+      <button @click="addGroup">新しいグループを追加</button>
+      <button @click="startLottery">抽選開始</button>
+
+      <div class="result">
+        <h2>抽選結果</h2>
+        <div v-for="(result, resultIndex) in lotteryResults" :key="resultIndex">
+          <p>{{ result.title }}: {{ result.winner }}</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
