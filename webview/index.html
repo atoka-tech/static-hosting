@@ -33,6 +33,11 @@
       <span id="outerHeight"></span>
     </div>
 
+    <div>
+      clientHeight:
+      <span id="clientHeight"></span>
+    </div>
+
     <div><a href="./" target="_blank" rel="noopener">target blank</a></div>
   </body>
 
@@ -44,12 +49,15 @@
 
     const innerHeight = window.innerHeight;
     const outerHeight = window.outerHeight;
+    const clientHeight = document.documentElement.clientHeight;
 
     const $innerHeight = document.getElementById("innerHeight");
     const $outerHeight = document.getElementById("outerHeight");
+    const $clientHeight = document.getElementById("clientHeight");
 
     $innerHeight.textContent = innerHeight;
     $outerHeight.textContent = outerHeight;
+    $clientHeight.textContent = clientHeight;
 
     let res = "";
 
