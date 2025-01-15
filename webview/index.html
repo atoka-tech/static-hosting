@@ -9,6 +9,8 @@
     <div>
       UserAgent:
       <div id="ua"></div>
+      <div id="standalone"></div>
+      <div id="external"></div>
       <div id="result"></div>
     </div>
 
@@ -40,9 +42,13 @@
     }
 
     const $ua = document.getElementById("ua");
+    const $standalone = document.getElementById("standalone");
+    const $external = document.getElementById("external");
     const $result = document.getElementById("result");
 
     $ua.textContent = window.navigator.userAgent.toLowerCase();
+    $standalone.textContent = standalone;
+    $external.textContent = window.external;
     $result.textContent = res;
   </script>
 </html>
