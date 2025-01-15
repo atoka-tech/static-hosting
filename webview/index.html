@@ -9,12 +9,38 @@
     <div>
       UserAgent:
       <div id="ua"></div>
+      <div id="result"></div>
     </div>
   </body>
 
   <script>
+    const standalone = window.navigator.standalone,
+      userAgent = window.navigator.userAgent.toLowerCase(),
+      safari = /safari/.test(userAgent),
+      ios = /iphone|ipod|ipad/.test(userAgent);
+
+    let res = "";
+
+    if (ios) {
+      if (!standalone && safari) {
+        //browser
+        res = "browser";
+      } else if (standalone && !safari) {
+        //standalone
+        res = "standalone";
+      } else if (!standalone && !safari) {
+        //uiwebview
+        res = "uiwebview";
+      }
+    } else {
+      //not iOS
+      res = "not iOS";
+    }
+
     const $ua = document.getElementById("ua");
+    const $result = document.getElementById("result");
 
     $ua.textContent = window.navigator.userAgent.toLowerCase();
+    $result.textContent = res;
   </script>
 </html>
