@@ -7,42 +7,9 @@
   </head>
   <body>
     <div>
-      Window:
-      <span id="window" style="white-space: pre-wrap"></span>
-    </div>
-    <div>
-      UserAgent:
-      <span id="ua"></span>
-    </div>
-    <div>
-      standalone:
-      <span id="standalone"></span>
-    </div>
-    <div>
-      external:
-      <span id="external"></span>
-    </div>
-    <div>
       result:
       <span id="result"></span>
     </div>
-
-    <div>
-      innerHeight:
-      <span id="innerHeight"></span>
-    </div>
-
-    <div>
-      outerHeight:
-      <span id="outerHeight"></span>
-    </div>
-
-    <div>
-      clientHeight:
-      <span id="clientHeight"></span>
-    </div>
-
-    <div><a href="./" target="_blank" rel="noopener">target blank</a></div>
 
     <p>
       <br />
@@ -115,51 +82,84 @@
   </body>
 
   <script>
-    const standalone = window.navigator.standalone,
-      userAgent = window.navigator.userAgent.toLowerCase(),
-      safari = /safari/.test(userAgent),
-      ios = /iphone|ipod|ipad/.test(userAgent);
-
-    const innerHeight = window.innerHeight;
-    const outerHeight = window.outerHeight;
-    const clientHeight = document.documentElement.clientHeight;
-
-    const $window = document.getElementById("window");
-    const $innerHeight = document.getElementById("innerHeight");
-    const $outerHeight = document.getElementById("outerHeight");
-    const $clientHeight = document.getElementById("clientHeight");
-
-    $window.textContent = JSON.stringify(window);
-    $innerHeight.textContent = innerHeight;
-    $outerHeight.textContent = outerHeight;
-    $clientHeight.textContent = clientHeight;
-
-    let res = "";
-
-    if (ios) {
-      if (!standalone && safari) {
-        //browser
-        res = "browser";
-      } else if (standalone && !safari) {
-        //standalone
-        res = "standalone";
-      } else if (!standalone && !safari) {
-        //uiwebview
-        res = "uiwebview";
+    function detectInApp() {
+      const inapp_data = {
+        932: [746],
+        852: [666],
+        926: [752],
+        844: [670],
+        812: [635, 641],
+        667: [559],
+        896: [725, 721],
+        736: [628],
+        568: [460],
+      };
+      const is_ios_supported = !!navigator.userAgent.match(
+        /iPhone OS 15_|iPhone OS 16_|iPhone OS 17_/i
+      );
+      const is_ios17 = !!navigator.userAgent.match(/iOS 17/i);
+      const is_safari =
+        !!navigator.userAgent.match(/Safari/i) &&
+        !!navigator.userAgent.match(/Mobile/i) &&
+        !!navigator.userAgent.match(/Version/i);
+      const screen_h = screen.height;
+      const window_h = window.innerHeight;
+      if (is_ios_supported && is_safari && inapp_data[screen_h].length) {
+        if (screen_h == 812 && window_h == 635) return is_ios17; // ambiguity case
+        return inapp_data[screen_h].indexOf(window_h) !== -1;
       }
-    } else {
-      //not iOS
-      res = "not iOS";
+      return null;
     }
 
-    const $ua = document.getElementById("ua");
-    const $standalone = document.getElementById("standalone");
-    const $external = document.getElementById("external");
     const $result = document.getElementById("result");
 
-    $ua.textContent = window.navigator.userAgent.toLowerCase();
-    $standalone.textContent = standalone;
-    $external.textContent = window.external;
-    $result.textContent = res;
+    $result.textContent = detectInApp();
+
+    // const standalone = window.navigator.standalone,
+    //   userAgent = window.navigator.userAgent.toLowerCase(),
+    //   safari = /safari/.test(userAgent),
+    //   ios = /iphone|ipod|ipad/.test(userAgent);
+
+    // const innerHeight = window.innerHeight;
+    // const outerHeight = window.outerHeight;
+    // const clientHeight = document.documentElement.clientHeight;
+
+    // const $window = document.getElementById("window");
+    // const $innerHeight = document.getElementById("innerHeight");
+    // const $outerHeight = document.getElementById("outerHeight");
+    // const $clientHeight = document.getElementById("clientHeight");
+
+    // $window.textContent = JSON.stringify(window.);
+    // $innerHeight.textContent = innerHeight;
+    // $outerHeight.textContent = outerHeight;
+    // $clientHeight.textContent = clientHeight;
+
+    // let res = "";
+
+    // if (ios) {
+    //   if (!standalone && safari) {
+    //     //browser
+    //     res = "browser";
+    //   } else if (standalone && !safari) {
+    //     //standalone
+    //     res = "standalone";
+    //   } else if (!standalone && !safari) {
+    //     //uiwebview
+    //     res = "uiwebview";
+    //   }
+    // } else {
+    //   //not iOS
+    //   res = "not iOS";
+    // }
+
+    // const $ua = document.getElementById("ua");
+    // const $standalone = document.getElementById("standalone");
+    // const $external = document.getElementById("external");
+    // const $result = document.getElementById("result");
+
+    // $ua.textContent = window.navigator.userAgent.toLowerCase();
+    // $standalone.textContent = standalone;
+    // $external.textContent = window.external;
+    // $result.textContent = res;
   </script>
 </html>
