@@ -8,19 +8,29 @@
   <body>
     <div>
       UserAgent:
-      <div id="ua"></div>
+      <span id="ua"></span>
     </div>
     <div>
       standalone:
-      <div id="standalone"></div>
+      <span id="standalone"></span>
     </div>
     <div>
       external:
-      <div id="external"></div>
+      <span id="external"></span>
     </div>
     <div>
       result:
-      <div id="result"></div>
+      <span id="result"></span>
+    </div>
+
+    <div>
+      innerHeight:
+      <span id="innerHeight"></span>
+    </div>
+
+    <div>
+      outerHeight:
+      <span id="outerHeight"></span>
     </div>
 
     <div><a href="./" target="_blank" rel="noopener">target blank</a></div>
@@ -31,6 +41,15 @@
       userAgent = window.navigator.userAgent.toLowerCase(),
       safari = /safari/.test(userAgent),
       ios = /iphone|ipod|ipad/.test(userAgent);
+
+    const innerHeight = window.innerHeight;
+    const outerHeight = window.outerHeight;
+
+    const $innerHeight = document.getElementById("innerHeight");
+    const $outerHeight = document.getElementById("outerHeight");
+
+    $innerHeight.textContent = innerHeight;
+    $outerHeight.textContent = outerHeight;
 
     let res = "";
 
