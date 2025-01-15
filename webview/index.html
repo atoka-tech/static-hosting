@@ -113,7 +113,7 @@
 
     const $result = document.getElementById("result");
 
-    $result.textContent = detectInApp();
+    $result.textContent = detectInApp() ? "inapp" : "browser";
 
     // const standalone = window.navigator.standalone,
     //   userAgent = window.navigator.userAgent.toLowerCase(),
