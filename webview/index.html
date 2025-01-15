@@ -7,6 +7,10 @@
   </head>
   <body>
     <div>
+      Window:
+      <span id="window" style="white-space: pre-wrap"></span>
+    </div>
+    <div>
       UserAgent:
       <span id="ua"></span>
     </div>
@@ -120,10 +124,12 @@
     const outerHeight = window.outerHeight;
     const clientHeight = document.documentElement.clientHeight;
 
+    const $window = document.getElementById("window");
     const $innerHeight = document.getElementById("innerHeight");
     const $outerHeight = document.getElementById("outerHeight");
     const $clientHeight = document.getElementById("clientHeight");
 
+    $window.textContent = JSON.stringify(window);
     $innerHeight.textContent = innerHeight;
     $outerHeight.textContent = outerHeight;
     $clientHeight.textContent = clientHeight;
