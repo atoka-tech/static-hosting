@@ -13,6 +13,13 @@
     <div>clientHeight: <span id="clientHeight"></span></div>
     <div>result: <span id="result"></span></div>
 
+    <div>webkit.messageHandlers: <span id="messageHandlers"></span></div>
+
+    <div>
+      <a href="http://www.google.co.jp" target="_blank">external link</a>
+    </div>
+
+    <div><button id="linkTo">linkto</button></div>
     <p>
       <br />
       <br />
@@ -113,6 +120,10 @@
       return null;
     }
 
+    const linkTo = () => {
+      window.location.href = "x-web-search://?";
+    };
+
     const standalone = window.navigator.standalone,
       userAgent = window.navigator.userAgent.toLowerCase(),
       safari = /safari/.test(userAgent),
@@ -129,6 +140,8 @@
     const $screenHeight = document.getElementById("screenHeight");
     const $clientHeight = document.getElementById("clientHeight");
     const $result = document.getElementById("result");
+    const $messageHandlers = document.getElementById("messageHandlers");
+    const $linkTo = document.getElementById("linkTo");
 
     $userAgent.textContent = window.navigator.userAgent;
     $innerHeight.textContent = innerHeight;
@@ -136,5 +149,8 @@
     $screenHeight.textContent = screenHeight;
     $clientHeight.textContent = clientHeight;
     $result.textContent = detect_inapp() ? "inapp" : "webview";
+    $messageHandlers.textContent = String(window.webkit?.messageHandlers);
+
+    $linkTo.addEventListener("click", linkTo);
   </script>
 </html>
