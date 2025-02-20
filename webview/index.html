@@ -16,12 +16,14 @@
     <div>webkit.messageHandlers: <span id="messageHandlers"></span></div>
     <div>safari.pushNotification: <span id="pushNotification"></span></div>
     <div>indexedDB: <span id="indexedDB"></span></div>
+    <div>cookie.hoge: <span id="cookieHoge"></span></div>
 
     <div>
       <a href="http://www.google.co.jp" target="_blank">external link</a>
     </div>
 
     <div><button id="linkTo">linkto</button></div>
+    <div><button id="setCookie">setCookie</button></div>
     <p>
       <br />
       <br />
@@ -141,6 +143,16 @@
       window.location.href = "x-web-search://?";
     };
 
+    const setCookie = (name, value, days) => {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    };
+
     const standalone = window.navigator.standalone,
       userAgent = window.navigator.userAgent.toLowerCase(),
       safari = /safari/.test(userAgent),
@@ -160,6 +172,8 @@
     const $messageHandlers = document.getElementById("messageHandlers");
     const $pushNotification = document.getElementById("pushNotification");
     const $linkTo = document.getElementById("linkTo");
+    const $setCookie = document.getElementById("setCookie");
+    const $cookieHoge = document.getElementById("cookieHoge");
 
     $userAgent.textContent = window.navigator.userAgent;
     $innerHeight.textContent = innerHeight;
@@ -169,8 +183,12 @@
     $result.textContent = detect_inapp() ? "inapp" : "webview";
     $messageHandlers.textContent = String(window.webkit?.messageHandlers);
     $pushNotification.textContent = String(window.safari?.pushNotification);
+    $cookieHoge.textContent = document.cookie;
 
     $linkTo.addEventListener("click", linkTo);
+    $setCookie.addEventListener("click", () => {
+      setCookie("hoge", "fuga", 1);
+    });
 
     (async () => {
       const result = await detectInAppBrowser();
