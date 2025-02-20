@@ -15,6 +15,7 @@
 
     <div>webkit.messageHandlers: <span id="messageHandlers"></span></div>
     <div>safari.pushNotification: <span id="pushNotification"></span></div>
+    <div>indexedDB: <span id="indexedDB"></span></div>
 
     <div>
       <a href="http://www.google.co.jp" target="_blank">external link</a>
@@ -121,6 +122,21 @@
       return null;
     }
 
+    const detectInAppBrowser = async () => {
+      try {
+        const testDB = indexedDB.open("inAppDetectionTest");
+        testDB.onblocked = () => {
+          return "possible_in_app";
+        };
+        // ストレージクォータチェック
+        const { quota } = await navigator.storage.estimate();
+        return quota < 50000000 ? "likely_in_app" : "regular_browser";
+      } catch (error) {
+        console.error("Detection error:", error);
+        return "inconclusive";
+      }
+    };
+
     const linkTo = () => {
       window.location.href = "x-web-search://?";
     };
@@ -155,5 +171,12 @@
     $pushNotification.textContent = String(window.safari?.pushNotification);
 
     $linkTo.addEventListener("click", linkTo);
+
+    (async () => {
+      const result = await detectInAppBrowser();
+
+      const $indexedDB = document.getElementById("indexedDB");
+      $indexedDB.textContent = result;
+    })();
   </script>
 </html>
