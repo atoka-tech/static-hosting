@@ -17,10 +17,12 @@
 
     <div><button id="cd-share">cross domain share</button></div>
     <div><button id="share">simple share</button></div>
+    <div><button id="file-share">file share</button></div>
   </body>
 
   <script>
     const $cdshare = document.getElementById("cd-share");
+    const $fileshare = document.getElementById("file-share");
     const $share = document.getElementById("share");
 
     $share.addEventListener("click", async () => {
@@ -38,6 +40,21 @@
       try {
         await navigator.share({
           files: ["https://placehold.jp/100/1000x1000.png"],
+        });
+      } catch (err) {
+        alert(err.message);
+        console.error(err);
+      }
+    });
+
+    $fileshare.addEventListener("click", async () => {
+      const blob = fetch("./512.png").then((res) => res.blob());
+
+      const file = new File([blob], "512.png", { type: "image/png" });
+
+      try {
+        await navigator.share({
+          files: [file],
         });
       } catch (err) {
         alert(err.message);
