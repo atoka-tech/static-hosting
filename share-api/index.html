@@ -18,6 +18,8 @@
     <div><button id="cd-share">cross domain share</button></div>
     <div><button id="share">simple share</button></div>
     <div><button id="file-share">file share</button></div>
+
+    <div>12:35</div>
   </body>
 
   <script>
@@ -48,8 +50,7 @@
     });
 
     $fileshare.addEventListener("click", async () => {
-      const blob = fetch("./512.png").then((res) => res.blob());
-
+      const blob = await fetch("./512.png").then((res) => res.blob());
       const file = new File([blob], "512.png", { type: "image/png" });
 
       try {
