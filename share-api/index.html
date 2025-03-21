@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>share api</title>
+  </head>
+  <body>
+    <div>
+      <a href="./512.png" download="512.png">simple download</a>
+    </div>
+    <div>
+      <a href="https://placehold.jp/100/1000x1000.png" download="1000x1000.png"
+        >cross domain download</a
+      >
+    </div>
+
+    <div><button id="cd-share">cross domain share</button></div>
+    <div><button id="share">simple share</button></div>
+  </body>
+
+  <script>
+    const $cdshare = document.getElementById("cd-share");
+    const $share = document.getElementById("share");
+
+    $share.addEventListener("click", async () => {
+      try {
+        await navigator.share({
+          title: "title",
+          text: "text",
+          url: "./512.png",
+        });
+      } catch (err) {
+        alert(err.message);
+        console.error(err);
+      }
+    });
+
+    $cdshare.addEventListener("click", async () => {
+      try {
+        await navigator.share({
+          title: "title",
+          text: "text",
+          url: "https://placehold.jp/100/1000x1000.png",
+        });
+      } catch (err) {
+        alert(err.message);
+        console.error(err);
+      }
+    });
+  </script>
+</html>
