@@ -26,9 +26,7 @@
     $share.addEventListener("click", async () => {
       try {
         await navigator.share({
-          title: "title",
-          text: "text",
-          url: "./512.png",
+          url: ["./512.png"],
         });
       } catch (err) {
         alert(err.message);
@@ -39,9 +37,7 @@
     $cdshare.addEventListener("click", async () => {
       try {
         await navigator.share({
-          title: "title",
-          text: "text",
-          url: "https://placehold.jp/100/1000x1000.png",
+          files: ["https://placehold.jp/100/1000x1000.png"],
         });
       } catch (err) {
         alert(err.message);
